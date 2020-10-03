@@ -1,18 +1,9 @@
+import projectModel from "./../../models/ProjectModel.js"
+
 export function ProjectView() {
 	return {
-		id: "project",
+		id: "project", hidden: true,
 		rows: [
-			{
-				css: "webix_dark",
-				view: "toolbar",
-				height: 45,
-				cols: [
-					{ view: "label", label: "ПРОЕКТЫ" },
-					{ view: "template", role: "placeholder", width: 459, borderless: 1 },
-					{ view: "template", template: "Сотрудник Сотрудникович", role: "placeholder", width: 168, borderless: 1 },
-					{ view: "button", label: "Выйти", autowidth: true, width: 1 }
-				]
-			},
 			{
 				css: "webix_dark",
 				view: "toolbar",
@@ -33,14 +24,8 @@ export function ProjectView() {
 					{ id: "desc", name: "desc", header: "Описание",  fillspace: true, sort: "string",
 					hidden: false }
 				],
-				view: "datatable", id : "projectDatatable", select: true,
-				borderless: 0, data: [
-					{id: 1, name: "testProject1", desc: "testDesc1"},
-					{id: 2, name: "testProject2", desc: "testDesc2"},
-					{id: 3, name: "testProject3", desc: "testDesc3"},
-					{id: 4, name: "testProject4", desc: "testDesc4"}
-
-				],
+				view: "datatable", id : "projectDatatable", select: true, scrollX: false,
+				borderless: 0, data: projectModel.getProjects(),
 			}
 		]
 

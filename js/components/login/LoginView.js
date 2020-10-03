@@ -1,10 +1,10 @@
-import { Application } from "../../index.js"
-
 export function LoginView() {
   return {
-    "rows": [
+    id: "login", hidden: false,
+    rows: [
       {
         "autoheight": false,
+        id: "loginForm",
         "view": "form",
         "padding": {
           "top": 200,
@@ -13,9 +13,9 @@ export function LoginView() {
           "right": 400
         },
         "rows": [
-          { "view": "text", "label": "Логин", "name": "name" },
-          { "view": "text", "label": "Пароль", "name": "password" },
-          { view: "button", id: "confirm", click: Application.prototype.run(1), css: "webix_primary", label: "Войти" }
+          { "view": "text", "label": "Логин", "name": "login" },
+          { "view": "text", "label": "Пароль", type: "password", "name": "password" },
+          { view: "button", id: "confirmLogin", css: "webix_primary", label: "Войти" , hotkey: "enter"}
         ]
       }
     ]

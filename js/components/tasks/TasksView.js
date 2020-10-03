@@ -1,60 +1,48 @@
-webix.ui({
-    "id": 1601297163485,
-	"rows": [
-		{
-			"css": "webix_dark",
-			"view": "toolbar",
-			"height": 45,
-			"cols": [
-				{ "view": "label", "label": "ЗАДАЧИ" },
-				{ "view": "template", "role": "placeholder", "width": 459, "borderless": 1 },
-				{ "view": "template", "template": "Сотрудник Сотрудникович", "role": "placeholder", "width": 168, "borderless": 1 },
-				{ "view": "button", "label": "Выйти", "autowidth": true, "width": 1 }
-			]
-		},
-		{
-			"css": "webix_dark",
-			"view": "toolbar",
-			"cols": [
-				{ "view": "button", "label": "Создать задачу", "height": 0 },
-				{ "label": "Назначить сотрудников", "view": "button", "height": 0 }
-			],
-			"height": 45
-		},
-		{
-			"cols": [
-				{
-					"url": "demo->5f71db08cfe82b001a1ac631",
-					"columns": [
-						{
-							"id": "title",
-							"header": "Название",
-							"fillspace": false,
-							"sort": "string",
-							"hidden": false,
-							"width": 150,
-							"height": 150
-						},
-						{ "header": "Статус", "sort": "string", "fillspace": false, "hidden": false, "width": 70 },
-						{ "header": "Срочность", "fillspace": false, "hidden": false, "width": 90 },
-						{ "header": "Ответственный", "fillspace": false, "hidden": false, "width": 180 },
-						{ "header": "План часов", "fillspace": false, "hidden": false, "width": 100 },
-						{ "header": "Факт часов", "fillspace": false, "hidden": false, "width": 100 }
-					],
-					"view": "datatable",
-					"borderless": 0,
-					"width": 0
-				},
-				{
-					"width": 166,
-					"rows": [
-						{ "view": "template", "template": "Backlog", "role": "placeholder" },
-						{ "view": "template", "template": "You can place any widget here..", "role": "placeholder", "width": 0, "height": 184 },
-						{ "view": "template", "template": "Согласовано", "role": "placeholder", "height": 42 },
-						{ "view": "template", "template": "You can place any widget here..", "role": "placeholder", "height": 207 }
-					]
-				}
-			]
-		}
-	]
-})
+import taskModel from "./../../models/TaskModel.js"
+
+export function TasksView() {
+	return {
+		"id": "tasks", hidden: true,
+		"rows": [
+			{
+				"css": "webix_dark",
+				"view": "toolbar",
+				"cols": [
+					{ "view": "button", id: "createTask", "label": "Создать", "height": 0 },
+					{ "view": "button", id: "removeTask","label": "Удалить", "height": 0 },
+					{ "view": "button","label": "Назначить сотрудников", "height": 0 }
+				],
+				"height": 45
+			},
+			{
+				"cols": [
+					{
+						"columns": [
+							{id: "name", header: "Название", name: "name", sort: "string", fillspace: true, width: 150},
+							{id: "status", header: "Статус", name: "status", sort: "string", width: 100 },
+							{id: "importance", header: "Срочность", sort: "string", name: "importance", width: 100 },
+							{id: "employee", header: "Ответственный", sort: "string", name: "employee", width: 240 },
+							{id: "planH", header: "План часов", sort: "int", name: "planH", width: 100 },
+							{id: "factH", header: "Факт часов", sort: "int", name: "factH", width: 100 }
+						],
+						"view": "datatable",
+						id: "tasksDatatable",
+						select: true,
+						scrollX: false,
+						"borderless": 0,
+						data: taskModel.getTasks()
+					},
+					{
+						"width": 300,
+						"rows": [
+							{ "view": "template", "template": "Backlog", "role": "placeholder", "height": 40 },
+							{ "view": "template", "template": "You can place any widget here..", "role": "placeholder", "width": 0, "height": 184 },
+							{ "view": "template", "template": "Согласовано", "role": "placeholder", "height": 40 },
+							{ "view": "template", "template": "You can place any widget here..", "role": "placeholder", "height": 207 }
+						]
+					}
+				]
+			}
+		]
+	}
+}

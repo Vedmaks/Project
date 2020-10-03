@@ -1,16 +1,14 @@
-class ProjectModel {
+import { Project } from "./entities/Project.js"
 
-    Project(id, name, desc) {
-        return {id: id, name: name, desc: desc}
-    }
+class ProjectModel {
 
     getProjects() {
 
         let arr = [
-            this.Project(1, "Проект 1", "Описание проекта 1."),
-            this.Project(2, "Проект 2", "Описание проекта 2."),
-            this.Project(3, "Проект 3", "Описание проекта 3."),
-            this.Project(4, "Проект 4", "Описание проекта 4.")
+            new Project(1, "Проект 1", "Описание проекта 1."),
+            new Project(2, "Проект 2", "Описание проекта 2."),
+            new Project(3, "Проект 3", "Описание проекта 3."),
+            new Project(4, "Проект 4", "Описание проекта 4.")
         ]
 
         return arr
@@ -18,8 +16,20 @@ class ProjectModel {
 
     getProjectById(id) {
 
-        return this.newProject(3, "Проект 3", "Описание проекта 3.")
+        return new Project(3, "Проект 3", "Описание проекта 3.")
 
+    }
+
+    create() {
+        alert("Саздание проекта")
+    }
+
+    edit(id) {
+        alert("Редактирование проекта. id: " + id)
+    }
+
+    remove(id) {
+        alert("Удаление проекта. id: " + id)
     }
 }
 

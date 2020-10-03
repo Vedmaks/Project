@@ -1,5 +1,6 @@
 import { ProjectView } from "./ProjectView.js"
 import { CProjectWindow } from "./projectWindow/CProjectWindow.js"
+import projectModel from "./../../models/ProjectModel.js"
 
 export class CProject {
     constructor() {
@@ -23,29 +24,56 @@ export class CProject {
             datatable: $$('projectDatatable'),
             create: $$('createBtn'),
             remove: $$('removeBtn'),
-            edit: $$('editBtn')
+            edit: $$('editBtn'),
+            logout: $$('logout')
         }
 
         this.window.attachEvents()
 
         this.view.create.attachEvent('onItemClick', () => {
-            this.window.switch("create")
+            this.window.createWindow()
         })
 
         this.view.edit.attachEvent('onItemClick', () => {
-            if (!this.view.datatable.getSelectedItem()) {
+            let item = this.view.datatable.getSelectedItem()
+
+            if (!item) {
                 webix.message('Выделите строку')
                 return
             }
-            this.window.switch("edit")
+            this.window.editWindow(item.id)
+
+            $$('projectName').setValue(item.name)
+            $$('projectDesc').setValue(item.desc)
+            
         })
 
         this.view.remove.attachEvent('onItemClick', () => {
-            if (!this.view.datatable.getSelectedItem()) {
+            let item = this.view.datatable.getSelectedItem()
+            if (!item) {
                 webix.message('Выделите строку')
                 return
             }
-            this.window.switch("remove")
+            this.window.removeWindow(item.id)
+            $$('projectName').setValue(item.name)
+            $$('projectDesc').setValue(item.desc)
+            $$('projectName').disable()
+            $$('projectDesc').disable()
+        })
+
+        $$("getBack1").attachEvent('onItemClick', () => {
+            $$("project").show()
+            $$("tasks").hide()
+            $$("getBack1").hide()
+            $$("mainLabel").setHTML("ПРОЕКТЫ")
+        })
+
+        this.view.datatable.attachEvent("onItemDblClick", (id) => {
+            let item = this.view.datatable.getItem(id)
+            $$("tasks").show()
+            $$("project").hide()
+            $$("getBack1").show()
+            $$("mainLabel").setHTML("Задачи: " + item.name)
         })
     }
 }

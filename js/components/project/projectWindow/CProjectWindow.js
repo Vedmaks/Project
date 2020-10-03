@@ -1,9 +1,9 @@
 import ProjectWindowView from "./ProjectWindowView.js"
+import projectModel from "./../../../models/ProjectModel.js"
 
 export class CProjectWindow {
     constructor() {
         this.view
-        this.isShow = false
     }
 
     init() { }
@@ -21,49 +21,63 @@ export class CProjectWindow {
             windowCancelBtn: $$('projectWindowCancelBtn'),
             form: $$('projectWindowForm')
         }
+    }
 
-        this.view.windowCancelBtn.attachEvent('onItemClick', () => {
+    createWindow() {
+        this.view.window.show()
+        this.view.windowLabel.setHTML('Создание проекта')
+        this.view.windowConfirmBtn.setValue('Создать')
+        let event1 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
+            projectModel.create()
+            this.view.form.clear()
             this.view.window.hide()
+            this.view.windowConfirmBtn.detachEvent(event1)
         })
 
+        this.view.windowCancelBtn.attachEvent('onItemClick', () => {
+            this.view.form.clear()
+            this.view.window.hide()
+            this.view.windowConfirmBtn.detachEvent(event1)
+        })
     }
 
-    switch(type) {
-        switch (this.isShow) {
-            case true:
-                this.hide()
-                break;
-            case false:
-                this.show(type)
-                break;
-        }
-    }
-
-    show(type) {
-        switch (type) {
-            case "create":
-                this.view.windowLabel.setHTML('Создание проекта')
-                break;
-            case "edit":
-                this.view.windowLabel.setHTML('Редактирование проекта')
-                this.view.windowConfirmBtn.setValue('Изменить')
-                break;
-            case "remove":
-                this.view.windowLabel.setHTML('Удаление проекта')
-                this.view.windowConfirmBtn.setValue('Удалить')
-                break;
-            default:
-                console.error('Неизвестный тип отображения окна для рабоыт с сущностью проекта');
-                return;
-        }
-
+    editWindow(id) {
         this.view.window.show()
+        this.view.windowLabel.setHTML('Редактирование проекта')
+        this.view.windowConfirmBtn.setValue('Изменить')
+        let event2 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
+            projectModel.edit(id)
+            this.view.form.clear()
+            this.view.window.hide()
+            this.view.windowConfirmBtn.detachEvent(event2)
+        })
+
+        this.view.windowCancelBtn.attachEvent('onItemClick', () => {
+            this.view.form.clear()
+            this.view.window.hide()
+            this.view.windowConfirmBtn.detachEvent(event2)
+        })
     }
 
-    hide() { }
+    removeWindow(id) {
+        this.view.window.show()
+        this.view.windowLabel.setHTML('Удаление проекта')
+        this.view.windowConfirmBtn.setValue('Удалить')
+        let event3 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
+            projectModel.remove(id)
+            this.view.form.clear()
+            this.view.window.hide()
+            $$('projectName').enable()
+            $$('projectDesc').enable()
+            this.view.windowConfirmBtn.detachEvent(event3)
+        }) 
 
-
-        
-
-    
+        this.view.windowCancelBtn.attachEvent('onItemClick', () => {
+            this.view.form.clear()
+            this.view.window.hide()
+            $$('projectName').enable()
+            $$('projectDesc').enable()
+            this.view.windowConfirmBtn.detachEvent(event3)
+        })
+    }
 }

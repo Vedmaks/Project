@@ -13,19 +13,11 @@ export default function ProjectWindowView() {
         modal: true,
         position:"center",
         body: {
-            view: 'form',
+            view: 'form', 
             id: 'projectWindowForm',
             elements: [
-                {
-                    view: 'text',
-                    label: 'Название',
-                },
-                {
-                    view: 'textarea',
-                    label: 'Описание',
-                    height: 200,
-                    width: 500
-                },
+                {view: 'text', id: "projectName", name: "name", label: 'Название',},
+                {view: 'textarea', id: "projectDesc", name: "desc", label: 'Описание', height: 200, width: 500},
                 {
                     cols: [
                         {
