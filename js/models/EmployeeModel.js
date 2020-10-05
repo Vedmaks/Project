@@ -5,9 +5,9 @@ class EmployeeModel {
     getEmployees() {
 
         let arr = [
-            new Employee(1, "Иванов", "Иван", "Иванович", "Программист"),
-            new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид"),
-            new Employee(3, "Васильев", "Василий", "Васильевич", "Программист")
+            new Employee(1, "Иванов", "Иван", "Иванович", "Программист", "ivanich"),
+            new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich"),
+            new Employee(3, "Васильев", "Василий", "Васильевич", "Программист", "vasilich")
         ]
 
         return arr
@@ -16,17 +16,17 @@ class EmployeeModel {
     getEmployeesByProjectId(id) {
 
         let arr = [
-            new Employee(1, "Иванов", "Иван", "Иванович", "Программист"),
-            new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид"),
-            new Employee(3, "Васильев", "Василий", "Васильевич", "Программист")
+            new Employee(1, "Иванов", "Иван", "Иванович", "Программист", "ivanich"),
+            new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich"),
+            new Employee(3, "Васильев", "Василий", "Васильевич", "Программист", "vasilich")
         ]
 
         return arr
     }
 
-    getEmployeeById(id) {
+    getEmployeeById(login) {
 
-        return new Employee(2, "Петр", "Петрович", "Петров", "Тимлид")
+        return new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich")
 
     }
 

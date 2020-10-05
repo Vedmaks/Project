@@ -1,4 +1,5 @@
 import { LoginView } from "./LoginView.js"
+import employeeModel from "./../../models/EmployeeModel.js"
 
 export class CLogin {
     constructor() {
@@ -23,12 +24,13 @@ export class CLogin {
         this.view.confirmLogin.attachEvent('onItemClick', () => {
 
             if (this.verification()) {
+                let login = $$("loginForm").elements.login.getValue();
                 $$("login").hide()
                 $$("project").show()
                 $$("logout").show()
                 $$("mainLabel").setHTML("ПРОЕКТЫ")
-                $$("currentUser").setHTML($$("loginForm").elements.login.getValue())
-                window.currentUser = { id: 1 }
+                window.currentUser = employeeModel.getEmployeeById(login)
+                $$("currentUser").setHTML(`${currentUser.lastname} ${currentUser.firstname}`)
                 $$("loginForm").clear()
             } else {
                 webix.message('Неверные данные!')
