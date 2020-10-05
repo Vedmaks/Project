@@ -20,7 +20,9 @@ export function OneTaskView() {
                     { id: "oneTaskImportance", view: "select", value: 1, label: "Срочность:", labelWidth: 120, name: "importance", height: 50,
                     options:[ "Очень срочно", "Срочно", "Не особо срочно", "Не срочно" ]
                     },   
-                    { id: "oneTaskEmployee", view: "text", label: "Ответственный:", labelWidth: 120, name: "employee", height: 50 },
+                    { id: "oneTaskEmployee", view: "select", label: "Ответственный:", labelWidth: 120, name: "employee", height: 50,
+                    options: ["Вася", "Петя", "Коля"]
+                    },
                     { id: "oneTaskPlanH", view: "text", label: "План часы:", labelWidth: 120, name: "planH", height: 50 },
                     { id: "oneTaskFactH", view: "text", label: "Факт часы:", labelWidth: 120, name: "factH", height: 50 },
                     { id: "oneTaskConfirm",view: "button", css: "webix_primary", label: "Сохранить изменения", height: 50 },

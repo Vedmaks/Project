@@ -33,12 +33,32 @@ export function TasksView() {
 						data: taskModel.getTasks()
 					},
 					{
-						"width": 300,
-						"rows": [
-							{ "view": "template", "template": "Backlog", "role": "placeholder", "height": 40 },
-							{ "view": "template", "template": "You can place any widget here..", "role": "placeholder", "width": 0, "height": 184 },
-							{ "view": "template", "template": "Согласовано", "role": "placeholder", "height": 40 },
-							{ "view": "template", "template": "You can place any widget here..", "role": "placeholder", "height": 207 }
+						width: 300,
+						rows: [
+							{
+								columns: [
+									{id: "name", header: "Backlog", name: "name", sort: "string", fillspace: true, width: 150},
+								],
+								view: "datatable",
+								id: "backlogDatatable",
+								select: true,
+								scrollX: false,
+								borderless: 0,
+								data: taskModel.getTasks()
+
+							},
+							{
+								columns: [
+									{id: "name", header: "Согласование", name: "name", sort: "string", fillspace: true, width: 150},
+								],
+								view: "datatable",
+								id: "agreementDatatable",
+								select: true,
+								scrollX: false,
+								borderless: 0,
+								data: taskModel.getTasks()
+
+							},
 						]
 					}
 				]
