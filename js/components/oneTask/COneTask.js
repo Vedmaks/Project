@@ -24,7 +24,7 @@ export class COneTask {
         })
 
         $$("oneTaskConfirm").attachEvent('onItemClick', () => {
-            taskModel.edit($$("oneTaskId").getValue())
+            taskModel.edit( $$("oneTaskId").getValue() )
             $$("tasks").show()
             $$("oneTask").hide()
             $$("getBack2").hide()

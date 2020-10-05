@@ -46,7 +46,7 @@ export class CProjectWindow {
         this.view.windowLabel.setHTML('Редактирование проекта')
         this.view.windowConfirmBtn.setValue('Изменить')
         let event2 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
-            projectModel.edit(id)
+            projectModel.update(id)
             this.view.form.clear()
             this.view.window.hide()
             this.view.windowConfirmBtn.detachEvent(event2)
@@ -64,7 +64,7 @@ export class CProjectWindow {
         this.view.windowLabel.setHTML('Удаление проекта')
         this.view.windowConfirmBtn.setValue('Удалить')
         let event3 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
-            projectModel.remove(id)
+            projectModel.delete(id)
             this.view.form.clear()
             this.view.window.hide()
             $$('projectName').enable()

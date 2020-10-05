@@ -1,6 +1,8 @@
 import { TasksView } from "./TasksView.js"
 import { CTasksWindow } from "./tasksWindow/CTasksWindow.js"
 import taskModel from "./../../models/TaskModel.js"
+import { CEmployee } from "./../employee/CEmployee.js"
+
 
 export class CTasks {
     constructor() {
@@ -15,6 +17,7 @@ export class CTasks {
     }
 
     config() {
+        webix.ui( new CEmployee().config() )
         webix.ui(this.window.config())
         return TasksView()
     }

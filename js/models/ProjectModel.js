@@ -24,11 +24,11 @@ class ProjectModel {
         alert("Саздание проекта")
     }
 
-    edit(id) {
+    update(id) {
         alert("Редактирование проекта. id: " + id)
     }
 
-    remove(id) {
+    delete(id) {
         alert("Удаление проекта. id: " + id)
     }
 }

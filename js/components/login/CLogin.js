@@ -17,6 +17,7 @@ export class CLogin {
     attachEvents() {
         this.view = {
             confirmLogin: $$('confirmLogin'),
+            logout: $$('logout'),
         }
 
         this.view.confirmLogin.attachEvent('onItemClick', () => {
@@ -27,10 +28,24 @@ export class CLogin {
                 $$("logout").show()
                 $$("mainLabel").setHTML("ПРОЕКТЫ")
                 $$("currentUser").setHTML($$("loginForm").elements.login.getValue())
+                window.currentUser = { id: 1 }
                 $$("loginForm").clear()
             } else {
                 webix.message('Неверные данные!')
             }
+            
+        })
+
+        this.view.logout.attachEvent('onItemClick', () => {
+            $$("login").show()
+            $$("project").hide()
+            $$("tasks").hide()
+            $$("oneTask").hide()
+            $$("getBack1").hide()
+            $$("getBack2").hide()
+            $$("mainLabel").setHTML("Авторизация")
+            $$("currentUser").setHTML("")
+            $$("logout").hide()
             
         })
     }

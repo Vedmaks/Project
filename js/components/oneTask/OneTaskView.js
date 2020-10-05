@@ -14,8 +14,12 @@ export function OneTaskView() {
             {
                 "rows": [
                     { id: "oneTaskId", view: "text", label: "id:", name: "id", height: 50, hidden: true},
-                    { id: "oneTaskStatus", view: "text", label: "Статус:", labelWidth: 120, name: "status", height: 50 },
-                    { id: "oneTaskImportance", view: "text", label: "Срочность:", labelWidth: 120, name: "importance", height: 50 },
+                    { id: "oneTaskStatus", view: "select", label: "Статус:", labelWidth: 120, name: "status", height: 50,
+                    options:[ "Новая", "Назначена", "В работе", "Согласование", "Завершена" ] 
+                    },
+                    { id: "oneTaskImportance", view: "select", value: 1, label: "Срочность:", labelWidth: 120, name: "importance", height: 50,
+                    options:[ "Очень срочно", "Срочно", "Не особо срочно", "Не срочно" ]
+                    },   
                     { id: "oneTaskEmployee", view: "text", label: "Ответственный:", labelWidth: 120, name: "employee", height: 50 },
                     { id: "oneTaskPlanH", view: "text", label: "План часы:", labelWidth: 120, name: "planH", height: 50 },
                     { id: "oneTaskFactH", view: "text", label: "Факт часы:", labelWidth: 120, name: "factH", height: 50 },

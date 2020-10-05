@@ -10,7 +10,7 @@ export function TasksView() {
 				"cols": [
 					{ "view": "button", id: "createTask", "label": "Создать", "height": 0 },
 					{ "view": "button", id: "removeTask","label": "Удалить", "height": 0 },
-					{ "view": "button","label": "Назначить сотрудников", "height": 0 }
+					{ "view": "button", id: "setEmployees", "label": "Назначить сотрудников", "height": 0 }
 				],
 				"height": 45
 			},
@@ -19,8 +19,8 @@ export function TasksView() {
 					{
 						"columns": [
 							{id: "name", header: "Название", name: "name", sort: "string", fillspace: true, width: 150},
-							{id: "status", header: "Статус", name: "status", sort: "string", width: 100 },
-							{id: "importance", header: "Срочность", sort: "string", name: "importance", width: 100 },
+							{id: "status", header: "Статус", name: "status", sort: "string", width: 120 },
+							{id: "importance", header: "Срочность", sort: "string", name: "importance", width: 120 },
 							{id: "employee", header: "Ответственный", sort: "string", name: "employee", width: 240 },
 							{id: "planH", header: "План часов", sort: "int", name: "planH", width: 100 },
 							{id: "factH", header: "Факт часов", sort: "int", name: "factH", width: 100 }

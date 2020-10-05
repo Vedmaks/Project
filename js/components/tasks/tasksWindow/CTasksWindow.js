@@ -47,7 +47,7 @@ export class CTasksWindow {
         this.view.windowLabel.setHTML('Удаление задачи')
         this.view.windowConfirmBtn.setValue('Удалить')
         let event3 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
-            taskModel.remove(id)
+            taskModel.delete(id)
             $$('taskName').enable()
             $$('taskDesc').enable()
             this.view.form.clear()
