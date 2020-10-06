@@ -8,7 +8,7 @@ export class COneTask {
     
     
     init() {
-        
+
     }
 
     config() {
@@ -16,21 +16,35 @@ export class COneTask {
     }
 
     attachEvents() {
-        $$("oneTaskCancel").attachEvent('onItemClick', () => {
+
+        this.view = {
+            getBack1: $$("getBack1"),
+            getBack2: $$("getBack2"),
+            cancel: $$("oneTaskCancel"),
+            confirm: $$("oneTaskConfirm")
+        }
+
+        //Возвращение к задачам
+        this.view.cancel.attachEvent('onItemClick', () => {
             $$("tasks").show()
             $$("oneTask").hide()
-            $$("getBack2").hide()
-            $$("getBack1").show()
+            this.view.getBack2.hide()
+            this.view.getBack1.show()
         })
 
-        $$("oneTaskConfirm").attachEvent('onItemClick', () => {
-            taskModel.update( $$("oneTaskId").getValue() )
-            $$("tasks").show()
-            $$("oneTask").hide()
-            $$("getBack2").hide()
-            $$("getBack1").show()
+        //Изменение задачи
+        this.view.confirm.attachEvent('onItemClick', () => {
+            taskModel.update(this.fetch()).then(() => {
+                $$("tasks").show()
+                $$("oneTask").hide()
+                this.view.getBack2.hide()
+                this.view.getBack1.show()
+            })
+           
         })
     }
 
-
+    fetch() {
+        return $$("oneTask").getValues()
+    }
 }

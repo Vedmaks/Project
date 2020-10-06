@@ -2,31 +2,45 @@ import { Employee } from "./entities/Employee.js"
 
 class EmployeeModel {
 
+    constructor() {
+        this.data = new Map();
+        this.data.set(1, new Employee(1, "Иванов", "Иван", "Иванович", "Программист", "ivanich"));
+        this.data.set(2, new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich"));
+        this.data.set(3, new Employee(3, "Васильев", "Василий", "Васильевич", "Программист", "vasilich"));
+    }
+
     getEmployees() {
 
-        let arr = [
-            new Employee(1, "Иванов", "Иван", "Иванович", "Программист", "ivanich"),
-            new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich"),
-            new Employee(3, "Васильев", "Василий", "Васильевич", "Программист", "vasilich")
-        ]
+        return new Promise((resolve, reject) => {
+            let employees = []
 
-        return arr
+            for (let employee of this.data.values()) {
+                employees.push(employee)
+            }
+
+            resolve(employees)
+        })
     }
 
-    getEmployeesByProjectId(id) {
+    getEmployeesByProjectId(projectId) {
 
-        let arr = [
-            new Employee(1, "Иванов", "Иван", "Иванович", "Программист", "ivanich"),
-            new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich"),
-            new Employee(3, "Васильев", "Василий", "Васильевич", "Программист", "vasilich")
-        ]
+        return new Promise((resolve, reject) => {
+            let employees = []
 
-        return arr
+            for (let employee of this.data.values()) {
+
+                employees.push(employee)
+            }
+
+            resolve(employees)
+        })
     }
 
-    getEmployeeById(login) {
+    getEmployeeById(id) {
 
-        return new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich")
+        return new Promise((resolve, reject) => {
+            resolve(this.data.get(id))
+        })
 
     }
 
@@ -34,8 +48,11 @@ class EmployeeModel {
         alert("Добавление сотрудника id: " + employeeId + " в проект id: " + projectId)
     }
 
-    deleteEmployee(employeeId, projectId) {
-        alert("Удаление сотрудника id: " + employeeId + " из проекта id: " + projectId)
+    deleteEmployee(employee) {
+        return new Promise((resolve, reject) => {
+            this.data.delete(employee.id)
+            resolve()
+        })
     }
 }
 

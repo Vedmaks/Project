@@ -8,6 +8,7 @@ export class CEmployee {
     
     
     init() {
+        this.onChange = () => { this.refreshTable() }
 
     }
 
@@ -27,6 +28,8 @@ export class CEmployee {
             deleteCombo: $$('deleteCombo'),
             datatable: $$("employeeDatatable")
         }
+
+        this.refreshTable()
 
         $$("setEmployees").attachEvent('onItemClick', () => {
             this.view.window.show()
@@ -59,13 +62,28 @@ export class CEmployee {
                 return
             }
 
-            employeeModel.deleteEmployee(item.id, currentProject.id)
-            this.view.deleteCombo.setValue("")
-            
-            
+            employeeModel.getEmployeeById(item.id).then((employee) => {
+                employeeModel.deleteEmployee(employee).then(() => {
+                    this.onChange()
+                })
+            })
+
+            //employeeModel.deleteEmployee(item.id, currentProject.id)            
         })
 
     }
 
+    refreshTable(employees) {
+        if (employees) {
+            this.view.datatable.clearAll()
+            this.view.datatable.parse(employees)
+            return
+        } else {
+            employeeModel.getEmployees().then((employees) => {
+                this.view.datatable.clearAll()
+                this.view.datatable.parse(employees)
+            })
+        }
+    }
 
 }

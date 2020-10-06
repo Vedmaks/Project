@@ -2,6 +2,7 @@ import { TasksView } from "./TasksView.js"
 import { CTasksWindow } from "./tasksWindow/CTasksWindow.js"
 import taskModel from "./../../models/TaskModel.js"
 import { CEmployee } from "./../employee/CEmployee.js"
+import { Task } from "./../../models/entities/Task.js"
 
 
 export class CTasks {
@@ -13,6 +14,7 @@ export class CTasks {
     
     init() {
         this.window = new CTasksWindow()
+        this.window.onChange = () => { this.refreshTable() }
         this.window.init()
     }
 
@@ -27,49 +29,73 @@ export class CTasks {
             datatable: $$('tasksDatatable'),
             create: $$('createTask'),
             remove: $$('removeTask'),
-            logout: $$('logout')
+            getBack1: $$("getBack1"),
+            getBack2: $$("getBack2"),
+            tasks: $$("tasks"),
+            oneTask: $$("oneTask")
         }
 
+        //Добавление соббытий окна
         this.window.attachEvents()
 
+        //Обновление таблицы при показе
+        this.view.tasks.attachEvent("onViewShow", () => { this.refreshTable() });
+
+        //Создание задачи
         this.view.create.attachEvent('onItemClick', () => {
+            this.window.parse(new Task())
             this.window.createWindow()
         })
 
+        //Удаление задачи
         this.view.remove.attachEvent('onItemClick', () => {
             let item = this.view.datatable.getSelectedItem()
             if (!item) {
                 webix.message('Выделите строку')
                 return
             }
-            this.window.removeWindow(item.id)
-            $$('taskName').setValue(item.name)
-            $$('taskDesc').setValue(item.desc)
-            $$('taskName').disable()
-            $$('taskDesc').disable()
+
+            taskModel.getTaskById(item.id).then((task) => {
+                this.window.parse(task)
+                this.window.removeWindow()
+            })
         })
 
-        $$("getBack2").attachEvent('onItemClick', () => {
-            $$("tasks").show()
-            $$("oneTask").hide()
-            $$("getBack2").hide()
-            $$("getBack1").show()
+        //Возвращение к задачам
+        this.view.getBack2.attachEvent('onItemClick', () => {
+            this.view.tasks.show()
+            this.view.oneTask.hide()            
+            this.view.getBack1.show()
+            this.view.getBack2.hide()
         })
 
+        //Переход к конкретной задаче
         this.view.datatable.attachEvent("onItemDblClick", (id) => {
             let item = this.view.datatable.getItem(id)
-            $$("oneTask").show()
-            $$("tasks").hide()
-            $$("getBack1").hide()
-            $$("getBack2").show()
-            $$('oneTaskId').setValue(item.id)
-            $$('oneTaskName').setValue(item.name)
-            $$('oneTaskDesc').setValue(item.desc)
-            $$('oneTaskStatus').setValue(item.status)
-            $$('oneTaskImportance').setValue(item.importance)
-            $$('oneTaskEmployee').setValue(item.employee)
-            $$('oneTaskPlanH').setValue(item.planH)
-            $$('oneTaskFactH').setValue(item.factH)
+            this.view.oneTask.show()
+            this.view.tasks.hide()
+            this.view.getBack1.hide()
+            this.view.getBack2.show()
+
+            taskModel.getTaskById(item.id).then((task) => {
+                this.view.oneTask.parse(task)
+            })
         })
+
     }
+
+    //Обновление таблицы
+    refreshTable(tasks) {
+        if (tasks) {
+            this.view.datatable.clearAll()
+            this.view.datatable.parse(tasks)
+            return
+        } else {
+            taskModel.getTasksByProjectId(currentProject.id).then((tasks) => {
+                this.view.datatable.clearAll()
+                this.view.datatable.parse(tasks)
+            })
+        }
+    }
+    
 }

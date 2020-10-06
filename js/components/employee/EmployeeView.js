@@ -29,7 +29,7 @@ export default function EmployeeView() {
                     height: 400,
                     width: 500,
                     "borderless": 0,
-                    data: employeeModel.getEmployeesByProjectId()
+                    data: []
                 },
                 {
                     view: 'form', 
@@ -38,7 +38,7 @@ export default function EmployeeView() {
                     elements: [
                         { template:"Добавить", type:"section"},
                         { view:"combo", id:"addCombo", value:"", width: 300,
-                         options: employeeModel.getEmployees()},
+                         options: ["Вася", "Петя", "Коля"]},
                         { view: 'button', id: 'addEmployee', value: 'Добавить', },
                         { template:"Удалить", type:"section"},
                         { view: 'button', id: 'deleteEmployee', value: 'Удалить', },

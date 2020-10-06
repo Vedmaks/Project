@@ -1,5 +1,3 @@
-import projectModel from "./../../models/ProjectModel.js"
-
 export function ProjectView() {
 	return {
 		id: "project", hidden: true,
@@ -25,7 +23,7 @@ export function ProjectView() {
 					hidden: false }
 				],
 				view: "datatable", id : "projectDatatable", select: true, scrollX: false,
-				borderless: 0, data: projectModel.getProjects(),
+				borderless: 0, data: [],
 			}
 		]
 

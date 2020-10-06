@@ -1,5 +1,3 @@
-import taskModel from "./../../models/TaskModel.js"
-
 export function TasksView() {
 	return {
 		"id": "tasks", hidden: true,
@@ -30,7 +28,7 @@ export function TasksView() {
 						select: true,
 						scrollX: false,
 						"borderless": 0,
-						data: taskModel.getTasks()
+						data: []
 					},
 					{
 						width: 300,
@@ -44,7 +42,7 @@ export function TasksView() {
 								select: true,
 								scrollX: false,
 								borderless: 0,
-								data: taskModel.getTasks()
+								data: []
 
 							},
 							{
@@ -56,7 +54,7 @@ export function TasksView() {
 								select: true,
 								scrollX: false,
 								borderless: 0,
-								data: taskModel.getTasks()
+								data: []
 
 							},
 						]

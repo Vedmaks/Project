@@ -1,6 +1,7 @@
 import { ProjectView } from "./ProjectView.js"
 import { CProjectWindow } from "./projectWindow/CProjectWindow.js"
 import projectModel from "./../../models/ProjectModel.js"
+import { Project } from "./../../models/entities/Project.js"
 
 export class CProject {
     constructor() {
@@ -11,6 +12,7 @@ export class CProject {
     
     init() {
         this.window = new CProjectWindow()
+        this.window.onChange = () => { this.refreshTable() }
         this.window.init()
     }
 
@@ -25,12 +27,16 @@ export class CProject {
             create: $$('createBtn'),
             remove: $$('removeBtn'),
             edit: $$('editBtn'),
-            logout: $$('logout')
+            getBack: $$("getBack1"),
+            mainLabel: $$("mainLabel")
         }
 
         this.window.attachEvents()
 
+        this.refreshTable()
+
         this.view.create.attachEvent('onItemClick', () => {
+            this.window.parse(new Project())
             this.window.createWindow()
         })
 
@@ -41,10 +47,11 @@ export class CProject {
                 webix.message('Выделите строку')
                 return
             }
-            this.window.editWindow(item.id)
 
-            $$('projectName').setValue(item.name)
-            $$('projectDesc').setValue(item.desc)
+            projectModel.getProjectById(item.id).then((project) => {
+                this.window.parse(project)
+                this.window.editWindow()
+            })
             
         })
 
@@ -54,18 +61,19 @@ export class CProject {
                 webix.message('Выделите строку')
                 return
             }
-            this.window.removeWindow(item.id)
-            $$('projectName').setValue(item.name)
-            $$('projectDesc').setValue(item.desc)
-            $$('projectName').disable()
-            $$('projectDesc').disable()
+
+            projectModel.getProjectById(item.id).then((project) => {
+                this.window.parse(project)
+                this.window.removeWindow()
+            })
+            
         })
 
-        $$("getBack1").attachEvent('onItemClick', () => {
+        this.view.getBack.attachEvent('onItemClick', () => {
             $$("project").show()
             $$("tasks").hide()
-            $$("getBack1").hide()
-            $$("mainLabel").setHTML("ПРОЕКТЫ")
+            this.view.getBack.hide()
+            this.view.mainLabel.setHTML("ПРОЕКТЫ")
         })
 
         this.view.datatable.attachEvent("onItemDblClick", (id) => {
@@ -73,8 +81,21 @@ export class CProject {
             window.currentProject = {id: item.id};
             $$("tasks").show()
             $$("project").hide()
-            $$("getBack1").show()
-            $$("mainLabel").setHTML("Задачи: " + item.name)
+            this.view.getBack.show()
+            this.view.mainLabel.setHTML("Задачи: " + item.name)
         })
+    }
+
+    refreshTable(projects) {
+        if (projects) {
+            this.view.datatable.clearAll()
+            this.view.datatable.parse(projects)
+            return
+        } else {
+            projectModel.getProjects().then((projects) => {
+                this.view.datatable.clearAll()
+                this.view.datatable.parse(projects)
+            })
+        }
     }
 }

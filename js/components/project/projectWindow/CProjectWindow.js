@@ -19,7 +19,9 @@ export class CProjectWindow {
             windowLabel: $$('projectWindowLabel'),
             windowConfirmBtn: $$('projectWindowConfirmBtn'),
             windowCancelBtn: $$('projectWindowCancelBtn'),
-            form: $$('projectWindowForm')
+            form: $$('projectWindowForm'),
+            formName: $$('projectName'),
+            formDesc: $$('projectDesc')
         }
     }
 
@@ -27,11 +29,13 @@ export class CProjectWindow {
         this.view.window.show()
         this.view.windowLabel.setHTML('Создание проекта')
         this.view.windowConfirmBtn.setValue('Создать')
-        let event1 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
-            projectModel.create()
-            this.view.form.clear()
-            this.view.window.hide()
-            this.view.windowConfirmBtn.detachEvent(event1)
+        let event1 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {+
+            projectModel.create(this.fetch()).then(() => {
+                this.view.form.clear()
+                this.view.window.hide()
+                this.onChange()
+                this.view.windowConfirmBtn.detachEvent(event1)
+            })
         })
 
         this.view.windowCancelBtn.attachEvent('onItemClick', () => {
@@ -41,15 +45,18 @@ export class CProjectWindow {
         })
     }
 
-    editWindow(id) {
+    editWindow() {
         this.view.window.show()
         this.view.windowLabel.setHTML('Редактирование проекта')
         this.view.windowConfirmBtn.setValue('Изменить')
         let event2 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
-            projectModel.update(id)
-            this.view.form.clear()
-            this.view.window.hide()
-            this.view.windowConfirmBtn.detachEvent(event2)
+            projectModel.update(this.fetch()).then(() => {
+                this.view.form.clear()
+                this.view.window.hide()
+                this.onChange()
+                this.view.windowConfirmBtn.detachEvent(event2) 
+            })
+            
         })
 
         this.view.windowCancelBtn.attachEvent('onItemClick', () => {
@@ -59,25 +66,38 @@ export class CProjectWindow {
         })
     }
 
-    removeWindow(id) {
+    removeWindow() {
         this.view.window.show()
         this.view.windowLabel.setHTML('Удаление проекта')
         this.view.windowConfirmBtn.setValue('Удалить')
+        this.view.formName.disable()
+        this.view.formDesc.disable()
         let event3 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
-            projectModel.delete(id)
-            this.view.form.clear()
-            this.view.window.hide()
-            $$('projectName').enable()
-            $$('projectDesc').enable()
-            this.view.windowConfirmBtn.detachEvent(event3)
+            this.view.formName.enable()
+            this.view.formDesc.enable()
+            projectModel.delete(this.fetch()).then(() => {
+                this.view.form.clear()
+                this.view.window.hide()
+                this.onChange()
+                this.view.windowConfirmBtn.detachEvent(event3) 
+            })
         }) 
 
         this.view.windowCancelBtn.attachEvent('onItemClick', () => {
             this.view.form.clear()
             this.view.window.hide()
-            $$('projectName').enable()
-            $$('projectDesc').enable()
+            this.view.formName.enable()
+            this.view.formDesc.enable()
             this.view.windowConfirmBtn.detachEvent(event3)
         })
     }
+
+    fetch() {
+        return this.view.form.getValues()
+    }
+
+    parse(values) {
+        this.view.form.setValues(values)
+    }
+
 }
