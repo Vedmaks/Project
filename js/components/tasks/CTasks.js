@@ -26,16 +26,20 @@ export class CTasks {
 
     attachEvents() {
         this.view = {
-            datatable: $$('tasksDatatable'),
+            tasksDatatable: $$('tasksDatatable'),
+            backlogDatatable: $$('backlogDatatable'),
+            agreementDatatable: $$('agreementDatatable'),
             create: $$('createTask'),
             remove: $$('removeTask'),
             getBack1: $$("getBack1"),
             getBack2: $$("getBack2"),
+            window: $$('tasksWindow'),
             tasks: $$("tasks"),
-            oneTask: $$("oneTask")
+            oneTask: $$("oneTask"),
+            taskStatus: $$("oneTaskStatus"),
         }
 
-        //Добавление соббытий окна
+        //Добавление событий окна
         this.window.attachEvents()
 
         //Обновление таблицы при показе
@@ -44,21 +48,7 @@ export class CTasks {
         //Создание задачи
         this.view.create.attachEvent('onItemClick', () => {
             this.window.parse(new Task())
-            this.window.createWindow()
-        })
-
-        //Удаление задачи
-        this.view.remove.attachEvent('onItemClick', () => {
-            let item = this.view.datatable.getSelectedItem()
-            if (!item) {
-                webix.message('Выделите строку')
-                return
-            }
-
-            taskModel.getTaskById(item.id).then((task) => {
-                this.window.parse(task)
-                this.window.removeWindow()
-            })
+            this.view.window.show()
         })
 
         //Возвращение к задачам
@@ -69,33 +59,109 @@ export class CTasks {
             this.view.getBack2.hide()
         })
 
-        //Переход к конкретной задаче
-        this.view.datatable.attachEvent("onItemDblClick", (id) => {
-            let item = this.view.datatable.getItem(id)
+        //Переход к конкретной задаче в основной таблице
+        this.view.tasksDatatable.attachEvent("onItemDblClick", (id) => {
+            let item = this.view.tasksDatatable.getItem(id)
             this.view.oneTask.show()
             this.view.tasks.hide()
             this.view.getBack1.hide()
             this.view.getBack2.show()
 
             taskModel.getTaskById(item.id).then((task) => {
+                this.statusAdapt(task.status)
                 this.view.oneTask.parse(task)
+            })
+        })
+
+        //Переход к конкретной задаче в бэклоге
+        this.view.backlogDatatable.attachEvent("onItemDblClick", (id) => {
+            let item = this.view.backlogDatatable.getItem(id)
+            this.view.oneTask.show()
+            this.view.tasks.hide()
+            this.view.getBack1.hide()
+            this.view.getBack2.show()
+
+            taskModel.getTaskById(item.id).then((task) => {
+                this.statusAdapt(task.status)
+                this.view.oneTask.parse(task)                
+            })
+        })
+
+        //Переход к конкретной задаче в согласовании
+        this.view.agreementDatatable.attachEvent("onItemDblClick", (id) => {
+            let item = this.view.agreementDatatable.getItem(id)
+            this.view.oneTask.show()
+            this.view.tasks.hide()
+            this.view.getBack1.hide()
+            this.view.getBack2.show()
+
+            taskModel.getTaskById(item.id).then((task) => {
+                this.statusAdapt(task.status)
+                this.view.oneTask.parse(task)
+                
             })
         })
 
     }
 
-    //Обновление таблицы
-    refreshTable(tasks) {
-        if (tasks) {
-            this.view.datatable.clearAll()
-            this.view.datatable.parse(tasks)
-            return
-        } else {
-            taskModel.getTasksByProjectId(currentProject.id).then((tasks) => {
-                this.view.datatable.clearAll()
-                this.view.datatable.parse(tasks)
-            })
+    statusAdapt(status) {
+
+        let statuses = []
+
+        switch (status) {
+
+            case "Новая":
+                statuses = [ "Новая", "Назначена", "В работе", "Согласование"];
+            break;
+
+            case "Бэклог":
+                statuses = ["Бэклог", "Новая"];
+            break;
+
+            case "Назначена":
+                statuses = ["Назначена", "В работе", "Согласование"];
+            break;
+
+            case "В работе":
+                statuses = ["В работе", "Согласование"];
+            break;
+
+            case "Согласование":
+                statuses = ["Согласование", "Назначена", "Завершена"];
+            break;
+
+            case "Завершена":
+                statuses = ["Завершена"];
+            break;
+
+            default:
+                statuses = [ "Новая", "Назначена", "В работе", "Согласование"];
+
         }
+
+        this.view.taskStatus.define("options", statuses)
+        this.view.taskStatus.refresh()
+
+    }
+
+    //Обновление таблицы
+    refreshTable() {
+        
+        taskModel.getTasksByProjectId(currentProject.id, "tasks").then((tasks) => {
+            this.view.tasksDatatable.clearAll()
+            this.view.tasksDatatable.parse(tasks)
+        })
+
+        taskModel.getTasksByProjectId(currentProject.id, "backlog").then((tasks) => {
+            this.view.backlogDatatable.clearAll()
+            this.view.backlogDatatable.parse(tasks)
+        })
+
+        taskModel.getTasksByProjectId(currentProject.id, "agreement").then((tasks) => {
+            this.view.agreementDatatable.clearAll()
+            this.view.agreementDatatable.parse(tasks)
+        })
+        
     }
     
 }

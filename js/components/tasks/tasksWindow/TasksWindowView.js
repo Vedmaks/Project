@@ -1,13 +1,11 @@
 export default function TasksWindowView() {
-    let headText = "Задача"
 
     return { 
         view: 'window',
         id: 'tasksWindow',
         head: {
             view: 'template',
-            id: 'tasksWindowLabel',
-            template: headText,
+            template: 'Создание задачи',
             css: 'webix_template'
         },
         modal: true,
@@ -16,6 +14,13 @@ export default function TasksWindowView() {
             view: 'form',
             id: 'tasksWindowForm',
             elements: [
+                {
+                    id: "taskStatus",
+                    view: 'select',
+                    label: 'Статус',
+                    name: "status",
+                    options:[ "Новая", "Бэклог"]
+                },
                 {
                     id: "taskName",
                     view: 'text',

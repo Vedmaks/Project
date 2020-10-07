@@ -8,10 +8,10 @@ class TaskModel {
         this.data.set(2, new Task(2, "Задача 2", "Описание задачи 2.", "Согласование", "Срочно", "Петя", "8", "4", "2"));
         this.data.set(3, new Task(3, "Задача 3", "Описание задачи 3.", "Завершена", "Не срочно", "Коля", "54", "101", "3"));
         this.data.set(4, new Task(4, "Задача 4", "Описание задачи 4.", "Согласование", "Срочно", "Петя", "8", "4", "1"));
-        this.data.set(5, new Task(5, "Задача 5", "Описание задачи 5.", "Завершена", "Не срочно", "Коля", "54", "101", "1"));
+        this.data.set(5, new Task(5, "Задача 5", "Описание задачи 5.", "Бэклог", "Не срочно", "Коля", "54", "101", "1"));
     }
 
-    getTasksByProjectId(projectId) {
+    getTasksByProjectId(projectId, status) {
 
         return new Promise((resolve, reject) => {
             let tasks = []
@@ -20,7 +20,21 @@ class TaskModel {
             for (let task of this.data.values()) {
 
                 if (task.projectId == projectId) {
-                  tasks.push(task)  
+
+                    if (status == "backlog" && task.status == "Бэклог") {
+                        
+                        tasks.push(task)                        
+                    }
+
+                    if (status == "agreement" && task.status == "Согласование") {
+                        
+                        tasks.push(task)            
+                    }
+
+                    if (status == "tasks" && task.status != "Бэклог" && task.status != "Согласование") {
+                        
+                        tasks.push(task)            
+                    }
                 }
             }
 
@@ -31,7 +45,7 @@ class TaskModel {
     getTaskById(id) {
 
         return new Promise((resolve, reject) => {
-            resolve(this.data.get(id))
+            resolve(this.data.get(Number(id)))
         })
 
     }
@@ -46,7 +60,6 @@ class TaskModel {
             id++
 
             task.id = id
-            task.status = "Новая"
             task.projectId = currentProject.id
             this.data.set(id, task)
             resolve(this.data.get(task.id))
@@ -55,14 +68,14 @@ class TaskModel {
 
     update(task) {
         return new Promise((resolve, reject) => {
-            this.data.set(task.id, task)
-            resolve(this.data.get(task.id))
+            this.data.set(Number(task.id), task)
+            resolve(this.data.get(Number(task.id)))
         })
     }
 
     delete(task) {
         return new Promise((resolve, reject) => {
-            this.data.delete(task.id)
+            this.data.delete(Number(task.id))
             resolve()
         })
     }

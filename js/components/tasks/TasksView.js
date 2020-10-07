@@ -7,7 +7,6 @@ export function TasksView() {
 				"view": "toolbar",
 				"cols": [
 					{ "view": "button", id: "createTask", "label": "Создать", "height": 0 },
-					{ "view": "button", id: "removeTask","label": "Удалить", "height": 0 },
 					{ "view": "button", id: "setEmployees", "label": "Назначить сотрудников", "height": 0 }
 				],
 				"height": 45
@@ -25,7 +24,6 @@ export function TasksView() {
 						],
 						"view": "datatable",
 						id: "tasksDatatable",
-						select: true,
 						scrollX: false,
 						"borderless": 0,
 						data: []
@@ -39,7 +37,6 @@ export function TasksView() {
 								],
 								view: "datatable",
 								id: "backlogDatatable",
-								select: true,
 								scrollX: false,
 								borderless: 0,
 								data: []
@@ -51,7 +48,6 @@ export function TasksView() {
 								],
 								view: "datatable",
 								id: "agreementDatatable",
-								select: true,
 								scrollX: false,
 								borderless: 0,
 								data: []

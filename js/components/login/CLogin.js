@@ -24,13 +24,17 @@ export class CLogin {
         this.view.confirmLogin.attachEvent('onItemClick', () => {
 
             if (this.verification()) {
-                let login = $$("loginForm").elements.login.getValue();
+                let id = $$("loginForm").elements.login.getValue();
                 $$("login").hide()
                 $$("project").show()
                 $$("logout").show()
                 $$("mainLabel").setHTML("ПРОЕКТЫ")
-                window.currentUser = employeeModel.getEmployeeById(login)
-                $$("currentUser").setHTML(`${currentUser.lastname} ${currentUser.firstname}`)
+                employeeModel.getEmployeeById(id).then((employee) => {
+                    window.currentUser = employee
+                    //$$("currentUser").setHTML(`${currentUser.lastname} ${currentUser.firstname}`)
+                })
+                
+                
                 $$("loginForm").clear()
             } else {
                 webix.message('Неверные данные!')

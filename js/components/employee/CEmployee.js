@@ -9,7 +9,6 @@ export class CEmployee {
     
     init() {
         this.onChange = () => { this.refreshTable() }
-
     }
 
     config() {
@@ -20,7 +19,8 @@ export class CEmployee {
 
         this.view = {
             window: $$('employeeWindow'),
-            windowCancelBtn: $$('employeeWindowCancelBtn'),
+            windowClose: $$('employeeWindowCancelBtn'),
+            windowOpen: $$("setEmployees"),
             form: $$('employeeWindowForm'),
             addEmployee: $$('addEmployee'),
             deleteEmployee: $$('deleteEmployee'),
@@ -29,31 +29,51 @@ export class CEmployee {
             datatable: $$("employeeDatatable")
         }
 
-        this.refreshTable()
+        // получение всех сотрудников для списка назначения
+        employeeModel.getEmployees().then((employees) => {
+            this.view.addCombo.define("options", employees)            
+        })
 
-        $$("setEmployees").attachEvent('onItemClick', () => {
+        // при открытии проекта, получение его работников
+        $$('projectDatatable').attachEvent("onItemDblClick", (id) => {
+            
+            employeeModel.getEmployeesByProjectId().then((employees) => {
+                window.currentProject = {employees: employees}
+                $$("oneTaskEmployee").define("options", currentProject.employees)
+                this.refreshTable()
+            })          
+        })
+
+        // открытие окна назначения сотрудников
+        this.view.windowOpen.attachEvent('onItemClick', () => {
             this.view.window.show()
         })
 
-        this.view.windowCancelBtn.attachEvent('onItemClick', () => {
+        // закрытие окна назначения сотрудников
+        this.view.windowClose.attachEvent('onItemClick', () => {
             this.view.form.clear()
             this.view.window.hide()
         })
 
+        // добавление сотрудника к проекту
         this.view.addEmployee.attachEvent('onItemClick', () => {
 
             let addedEmployee = this.view.addCombo.getValue()
 
             if(addedEmployee == "") {
                 webix.message('Выберите сотрудника!')
-            } else {
-                employeeModel.addEmployee(addedEmployee, currentProject.id)
-                this.view.addCombo.setValue("")
-            }
-            
-            
+                return
+            } 
+
+            employeeModel.getEmployeeById(addedEmployee).then((employee) => {
+                employeeModel.addEmployee(employee).then(() => {
+                    this.onChange()
+                    this.view.addCombo.setValue("")
+                })
+            })         
         })
 
+        // удаление сотрудника из проекта
         this.view.deleteEmployee.attachEvent('onItemClick', () => {
 
             let item = this.view.datatable.getSelectedItem()
@@ -66,24 +86,14 @@ export class CEmployee {
                 employeeModel.deleteEmployee(employee).then(() => {
                     this.onChange()
                 })
-            })
-
-            //employeeModel.deleteEmployee(item.id, currentProject.id)            
+            })     
         })
-
     }
 
-    refreshTable(employees) {
-        if (employees) {
-            this.view.datatable.clearAll()
-            this.view.datatable.parse(employees)
-            return
-        } else {
-            employeeModel.getEmployees().then((employees) => {
-                this.view.datatable.clearAll()
-                this.view.datatable.parse(employees)
-            })
-        }
-    }
+    // обновление таблицы сотрудников проекта
+    refreshTable() {
 
+        this.view.datatable.clearAll()
+        this.view.datatable.parse(currentProject.employees)
+    }
 }

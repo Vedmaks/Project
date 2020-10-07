@@ -76,6 +76,7 @@ export class CProject {
             this.view.mainLabel.setHTML("ПРОЕКТЫ")
         })
 
+        // переход к выбраному проекту
         this.view.datatable.attachEvent("onItemDblClick", (id) => {
             let item = this.view.datatable.getItem(id)
             window.currentProject = {id: item.id};
@@ -86,6 +87,7 @@ export class CProject {
         })
     }
 
+    // обновление таблицы проектов
     refreshTable(projects) {
         if (projects) {
             this.view.datatable.clearAll()

@@ -15,17 +15,18 @@ export function OneTaskView() {
                 "rows": [
                     { id: "oneTaskId", view: "text", label: "id:", name: "id", height: 50, hidden: true},
                     { id: "oneTaskStatus", view: "select", label: "Статус:", labelWidth: 120, name: "status", height: 50,
-                    options:[ "Новая", "Назначена", "В работе", "Согласование", "Завершена" ] 
+                    options: []
                     },
                     { id: "oneTaskImportance", view: "select", value: 1, label: "Срочность:", labelWidth: 120, name: "importance", height: 50,
                     options:[ "Очень срочно", "Срочно", "Не особо срочно", "Не срочно" ]
                     },   
                     { id: "oneTaskEmployee", view: "select", label: "Ответственный:", labelWidth: 120, name: "employee", height: 50,
-                    options: ["Вася", "Петя", "Коля"]
+                    options: []
                     },
                     { id: "oneTaskPlanH", view: "text", label: "План часы:", labelWidth: 120, name: "planH", height: 50 },
                     { id: "oneTaskFactH", view: "text", label: "Факт часы:", labelWidth: 120, name: "factH", height: 50 },
                     { id: "oneTaskConfirm",view: "button", css: "webix_primary", label: "Сохранить изменения", height: 50 },
+                    { id: "oneTaskDelete",view: "button", css: "webix_primary", label: "Удалить задачу", height: 50 },
                     { id: "oneTaskCancel",view: "button", css: "webix_primary", label: "Отмена", height: 50 }
                 ]
             }

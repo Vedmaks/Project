@@ -4,9 +4,9 @@ class EmployeeModel {
 
     constructor() {
         this.data = new Map();
-        this.data.set(1, new Employee(1, "Иванов", "Иван", "Иванович", "Программист", "ivanich"));
-        this.data.set(2, new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид", "petrovich"));
-        this.data.set(3, new Employee(3, "Васильев", "Василий", "Васильевич", "Программист", "vasilich"));
+        this.data.set(1, new Employee(1, "Иванов", "Иван", "Иванович", "Программист"));
+        this.data.set(2, new Employee(2, "Петров",  "Петр", "Петрович", "Тимлид"));
+        this.data.set(3, new Employee(3, "Васильев", "Василий", "Васильевич", "Программист"));
     }
 
     getEmployees() {
@@ -39,18 +39,33 @@ class EmployeeModel {
     getEmployeeById(id) {
 
         return new Promise((resolve, reject) => {
-            resolve(this.data.get(id))
+            resolve(this.data.get(Number(id)))
         })
 
     }
 
-    addEmployee(employeeId, projectId) {
-        alert("Добавление сотрудника id: " + employeeId + " в проект id: " + projectId)
+    addEmployee(employee) {
+
+        return new Promise((resolve, reject) => {
+
+            if (currentProject.employees.some( (item) => item.id == employee.id)) {
+                webix.message('Сотрудник есть в текущем проекте!')
+            } else {
+                currentProject.employees.push(employee)
+            }
+            
+            resolve()
+        })
     }
 
     deleteEmployee(employee) {
         return new Promise((resolve, reject) => {
-            this.data.delete(employee.id)
+
+            currentProject.employees.forEach( (item, i) => {
+                if (item.id == employee.id) {
+                    currentProject.employees.splice(i, 1)
+                }                
+            });
             resolve()
         })
     }

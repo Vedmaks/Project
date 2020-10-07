@@ -6,13 +6,14 @@ import { CEmployee } from "./employee/CEmployee.js"
 
 export class Application {
     constructor() {
-       this.login = new CLogin()
-       this.project = new CProject()
-       this.tasks = new CTasks()
-       this.oneTask = new COneTask()
-       this.employee = new CEmployee()
+       this.login = new CLogin() // эеземпляр контроллера авторизации
+       this.project = new CProject() // экземпляр контроллера проектов
+       this.tasks = new CTasks() // экземпляр контроллера задач
+       this.oneTask = new COneTask() // экземпляр контроллера одной задачи
+       this.employee = new CEmployee() //экземпляр контроллера работников
     }
 
+    // метод инициализации главного компонента
     init() {
         this.login.init()
         this.project.init()
@@ -21,6 +22,7 @@ export class Application {
         this.employee.init()
     }
 
+    // метод вызова обработки событий
     attachEvents() {
         this.project.attachEvents()
         this.login.attachEvents()
@@ -29,6 +31,7 @@ export class Application {
         this.employee.attachEvents()
     }
 
+    // метод отрисовки главной конфигурации
     config() {
        return {
            rows: [
