@@ -48,10 +48,10 @@ class EmployeeModel {
 
         return new Promise((resolve, reject) => {
 
-            if (currentProject.employees.some( (item) => item.id == employee.id)) {
+            if (currentProjectEmployees.some( (item) => item.id == employee.id)) {
                 webix.message('Сотрудник есть в текущем проекте!')
             } else {
-                currentProject.employees.push(employee)
+                currentProjectEmployees.push(employee)
             }
             
             resolve()
@@ -61,9 +61,9 @@ class EmployeeModel {
     deleteEmployee(employee) {
         return new Promise((resolve, reject) => {
 
-            currentProject.employees.forEach( (item, i) => {
+            currentProjectEmployees.forEach( (item, i) => {
                 if (item.id == employee.id) {
-                    currentProject.employees.splice(i, 1)
+                    currentProjectEmployees.splice(i, 1)
                 }                
             });
             resolve()

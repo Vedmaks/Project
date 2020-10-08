@@ -44,7 +44,7 @@ export class Application {
                     { view: "button", id: "getBack2", label: "К задачам", hidden: "true", autowidth: true, width: 1 },
 					{ view: "label", id:"mainLabel", label: "Авторизация" },
                     { view: "template", role: "placeholder", width: 460, borderless: 1 },
-					{ view: "template", id: "currentUser", template: "", role: "placeholder", width: 170, borderless: 1 },
+					{ view: "label", id: "currentUserLabel", label: "", role: "placeholder", width: 170, borderless: 1 },
                     { view: "button", id: "logout", label: "Выйти", hidden: "true", autowidth: true, width: 1 },
 				]
 			},

@@ -79,7 +79,7 @@ export class CProject {
         // переход к выбраному проекту
         this.view.datatable.attachEvent("onItemDblClick", (id) => {
             let item = this.view.datatable.getItem(id)
-            window.currentProject = {id: item.id};
+            window.currentProjectId = item.id;
             $$("tasks").show()
             $$("project").hide()
             this.view.getBack.show()

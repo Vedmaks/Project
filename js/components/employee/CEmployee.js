@@ -25,7 +25,6 @@ export class CEmployee {
             addEmployee: $$('addEmployee'),
             deleteEmployee: $$('deleteEmployee'),
             addCombo: $$('addCombo'),
-            deleteCombo: $$('deleteCombo'),
             datatable: $$("employeeDatatable")
         }
 
@@ -38,8 +37,16 @@ export class CEmployee {
         $$('projectDatatable').attachEvent("onItemDblClick", (id) => {
             
             employeeModel.getEmployeesByProjectId().then((employees) => {
-                window.currentProject = {employees: employees}
-                $$("oneTaskEmployee").define("options", currentProject.employees)
+                window.currentProjectEmployees = employees
+
+                let employeesList = []
+
+                for (let employee of currentProjectEmployees) {
+
+                    employeesList.push(employee.value)
+                }
+
+                $$("oneTaskEmployee").define("options", employeesList)
                 this.refreshTable()
             })          
         })
@@ -94,6 +101,6 @@ export class CEmployee {
     refreshTable() {
 
         this.view.datatable.clearAll()
-        this.view.datatable.parse(currentProject.employees)
+        this.view.datatable.parse(currentProjectEmployees)
     }
 }

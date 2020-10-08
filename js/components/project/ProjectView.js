@@ -6,6 +6,7 @@ export function ProjectView() {
 				css: "webix_dark",
 				view: "toolbar",
 				id: "CRUDToolbar",
+				hidden: true,
 				cols: [
 					{ view: "button", id: "createBtn", label: "Создать", height: 0 },
 					{ label: "Редактировать", id: "editBtn", view: "button", height: 0 },

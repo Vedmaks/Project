@@ -6,8 +6,8 @@ export function TasksView() {
 				"css": "webix_dark",
 				"view": "toolbar",
 				"cols": [
-					{ "view": "button", id: "createTask", "label": "Создать", "height": 0 },
-					{ "view": "button", id: "setEmployees", "label": "Назначить сотрудников", "height": 0 }
+					{ "view": "button", id: "createTask", "label": "Новая задача", "height": 0 },
+					{ "view": "button", id: "setEmployees", hidden: true, "label": "Назначить сотрудников", "height": 0 }
 				],
 				"height": 45
 			},
@@ -16,11 +16,11 @@ export function TasksView() {
 					{
 						"columns": [
 							{id: "name", header: "Название", name: "name", sort: "string", fillspace: true, width: 150},
-							{id: "status", header: "Статус", name: "status", sort: "string", width: 120 },
+							{id: "status", header: "Статус", name: "status", sort: "string", width: 160 },
 							{id: "importance", header: "Срочность", sort: "string", name: "importance", width: 120 },
-							{id: "employee", header: "Ответственный", sort: "string", name: "employee", width: 240 },
-							{id: "planH", header: "План часов", sort: "int", name: "planH", width: 100 },
-							{id: "factH", header: "Факт часов", sort: "int", name: "factH", width: 100 }
+							{id: "employee", header: "Ответственный", sort: "string", name: "employee", width: 200 },
+							{id: "planH", header: "План часов", sort: "int", name: "planH", width: 80 },
+							{id: "factH", header: "Факт часов", sort: "int", name: "factH", width: 80 }
 						],
 						"view": "datatable",
 						id: "tasksDatatable",
@@ -46,6 +46,7 @@ export function TasksView() {
 								columns: [
 									{id: "name", header: "Согласование", name: "name", sort: "string", fillspace: true, width: 150},
 								],
+								disabled: true,
 								view: "datatable",
 								id: "agreementDatatable",
 								scrollX: false,

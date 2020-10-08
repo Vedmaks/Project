@@ -38,7 +38,7 @@ export default function EmployeeView() {
                     elements: [
                         { template:"Добавить", type:"section"},
                         { view:"combo", id:"addCombo", value:"", width: 300,
-                         options: ["Вася", "Петя", "Коля"]},
+                         options: []},
                         { view: 'button', id: 'addEmployee', value: 'Добавить', },
                         { template:"Удалить", type:"section"},
                         { view: 'button', id: 'deleteEmployee', value: 'Удалить', },
