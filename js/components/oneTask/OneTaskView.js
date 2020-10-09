@@ -24,8 +24,8 @@ export function OneTaskView() {
                     { id: "oneTaskEmployee", view: "combo", disabled: true, label: "Ответственный:", value: "", labelWidth: 120, name: "employee", height: 50,
                     options: []
                     },
-                    { id: "oneTaskPlanH", view: "text", disabled: true, label: "План часы:", type: "number", labelWidth: 120, name: "planH", height: 50 },
-                    { id: "oneTaskFactH", view: "text", disabled: true, label: "Факт часы:", type: "number", labelWidth: 120, name: "factH", height: 50 },
+                    { id: "oneTaskPlanH", view: "text", disabled: true, label: "План часы:", type: "number", labelWidth: 120, name: "planH", attributes: {maxlength: 4}, height: 50 },
+                    { id: "oneTaskFactH", view: "text", disabled: true, label: "Факт часы:", type: "number", labelWidth: 120, name: "factH", attributes: {maxlength: 4}, height: 50 },
                     { id: "oneTaskConfirm",view: "button", hidden: true, css: "webix_primary", value: "Сохранить изменения", height: 50 },
                     { id: "oneTaskDelete",view: "button", hidden: true, css: "webix_primary", label: "Удалить задачу", height: 50 },
                     { id: "oneTaskCancel",view: "button", css: "webix_primary", label: "Отмена", height: 50 }

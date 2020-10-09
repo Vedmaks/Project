@@ -26,6 +26,7 @@ export default function TasksWindowView() {
                     view: 'text',
                     label: 'Название',
                     name: "name",
+                    attributes: {maxlength: 50}
                 },
                 {
                     id: "taskDesc",

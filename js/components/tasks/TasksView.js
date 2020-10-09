@@ -15,10 +15,10 @@ export function TasksView() {
 				"cols": [
 					{
 						"columns": [
-							{id: "name", header: "Название", name: "name", sort: "string", fillspace: true, width: 150},
-							{id: "status", header: "Статус", name: "status", sort: "string", width: 160 },
-							{id: "importance", header: "Срочность", sort: "string", name: "importance", width: 120 },
-							{id: "employee", header: "Ответственный", sort: "string", name: "employee", width: 200 },
+							{id: "name", header: ["Название", {content: "textFilter"}], name: "name", sort: "string", fillspace: true, width: 150},
+							{id: "status", header: [ "Статус", {content: "selectFilter"}], name: "status", sort: "string", width: 160 },
+							{id: "importance", header: ["Срочность", {content: "selectFilter"}], sort: "string", name: "importance", width: 120 },
+							{id: "employee", header: ["Ответственный", {content: "selectFilter"}], sort: "string", name: "employee", width: 200 },
 							{id: "planH", header: "План часов", sort: "int", name: "planH", width: 80 },
 							{id: "factH", header: "Факт часов", sort: "int", name: "factH", width: 80 }
 						],

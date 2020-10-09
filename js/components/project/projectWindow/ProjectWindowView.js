@@ -16,7 +16,7 @@ export default function ProjectWindowView() {
             view: 'form', 
             id: 'projectWindowForm',
             elements: [
-                {view: 'text', id: "projectName", name: "name", label: 'Название',},
+                {view: 'text', id: "projectName", name: "name", label: 'Название', attributes: {maxlength: 50} },
                 {view: 'textarea', id: "projectDesc", name: "desc", label: 'Описание', height: 200, width: 500},
                 {
                     cols: [
@@ -32,7 +32,11 @@ export default function ProjectWindowView() {
                         },
                     ]
                 },
-            ]
+            ],
+            rules:{
+                "name":webix.rules.isNotEmpty,
+                "desc":webix.rules.isNotEmpty,
+            }
         }
     }
 }

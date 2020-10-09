@@ -29,13 +29,18 @@ export class CProjectWindow {
         this.view.window.show()
         this.view.windowLabel.setHTML('Создание проекта')
         this.view.windowConfirmBtn.setValue('Создать')
-        let event1 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {+
-            projectModel.create(this.fetch()).then(() => {
-                this.view.form.clear()
-                this.view.window.hide()
-                this.onChange()
-                this.view.windowConfirmBtn.detachEvent(event1)
-            })
+        let event1 = this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
+
+            if(this.view.form.validate()) {
+
+                projectModel.create(this.fetch()).then(() => {
+                    this.view.form.clear()
+                    this.view.window.hide()
+                    this.onChange()
+                    this.view.windowConfirmBtn.detachEvent(event1)
+                })
+            } else {webix.message({ type:"error", text:"Поля должны быть заполнены!"})}
+            
         })
 
         this.view.windowCancelBtn.attachEvent('onItemClick', () => {

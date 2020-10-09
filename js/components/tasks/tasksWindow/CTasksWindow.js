@@ -21,11 +21,17 @@ export class CTasksWindow {
             form: $$('tasksWindowForm'),
         }
 
-        this.view.windowConfirmBtn.attachEvent('onItemClick', () => {+
-            taskModel.create(this.fetch()).then(() => {
-                this.view.window.hide()
-                this.onChange()
-            })
+        this.view.windowConfirmBtn.attachEvent('onItemClick', () => {
+
+            let task = this.fetch()
+            
+            if(this.validation(task)) {               
+
+                taskModel.create(task).then(() => {
+                    this.view.window.hide()
+                    this.onChange()
+                })             
+            }            
         })
 
         this.view.windowCancelBtn.attachEvent('onItemClick', () => {
@@ -39,5 +45,51 @@ export class CTasksWindow {
 
     parse(values) {
         this.view.form.setValues(values)
+    }
+
+    // валидация формы
+    validation(task) {
+
+        let checkResult = false
+        let name = task.name
+        let status = task.status
+        let desc = task.desc
+
+        switch (status) {
+            
+            case "Бэклог":
+
+                if (name == "") {
+                    webix.message("Укажите название задачи!")
+                    break;
+                }
+                
+                checkResult = true
+                
+            break;
+
+            case "Новая":
+
+                if (name == "") {
+                    webix.message("Укажите название задачи!")
+                    break;
+                }
+
+                if (desc == "") {
+                    webix.message("Заполните описание!")
+                    break;
+                }
+                
+                checkResult = true
+                
+            break;
+
+
+            default: webix.message("Укажите статус!")             
+
+        }
+
+        return checkResult
+
     }
 }
